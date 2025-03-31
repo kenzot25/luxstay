@@ -1,7 +1,7 @@
-import { User as FirebaseUser } from 'firebase/auth';
-import { ImageSourcePropType } from 'react-native';
+import { User as FirebaseUser } from "firebase/auth";
+import { ImageSourcePropType } from "react-native";
 
-export interface AppUser extends Omit<FirebaseUser, 'providerData'> {
+export interface AppUser extends Omit<FirebaseUser, "providerData"> {
   displayName: string | null;
   email: string | null;
   uid: string;
@@ -14,25 +14,16 @@ export interface Room {
   name: string;
   description: string;
   price: number;
-  images: ImageSourcePropType[];
+  images: string[];
   location: string;
   amenities: string[];
   rating: number;
-  reviews: number;
-  type: 'single' | 'double' | 'suite' | 'presidential';
-  isAvailable: boolean;
-  bedrooms: number;
-  bathrooms: number;
+  type: "single" | "double" | "suite" | "presidential";
+  isAvailable?: boolean;
   maxGuests: number;
-  size: number;
-  facilities: string[];
-  cancellationPolicy: string;
-  checkInTime: string;
-  checkOutTime: string;
-  houseRules: string[];
 }
 
-export type PaymentOption = '10%' | '20%' | '50%' | '100%';
+export type PaymentOption = "10%" | "20%" | "50%" | "100%";
 
 export interface CartItem {
   roomId: string;
@@ -77,8 +68,8 @@ export interface BookingDetails {
   checkOut: Date;
   guests: number;
   totalPrice: number;
-  paymentStatus: 'pending' | 'completed' | 'failed';
-  bookingStatus: 'confirmed' | 'cancelled' | 'pending';
+  paymentStatus: "pending" | "completed" | "failed";
+  bookingStatus: "confirmed" | "cancelled" | "pending";
   createdAt: Date;
   updatedAt: Date;
 }
@@ -88,7 +79,7 @@ export interface PaymentDetails {
   bookingId: string;
   amount: number;
   currency: string;
-  status: 'pending' | 'completed' | 'failed';
+  status: "pending" | "completed" | "failed";
   method: string;
   transactionId?: string;
   createdAt: Date;
@@ -104,7 +95,7 @@ export interface SearchFilters {
 
 export interface RoomFilters extends SearchFilters {
   priceRange?: [number, number];
-  type?: Room['type'];
+  type?: Room["type"];
   amenities?: string[];
   rating?: number;
   location_contains?: string;

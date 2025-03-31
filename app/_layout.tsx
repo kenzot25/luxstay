@@ -1,11 +1,12 @@
-import { useEffect } from "react";
-import { Stack } from "expo-router";
-import { Provider } from "react-redux";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { store } from "@/store";
+import { useEffect } from "react";
+import { Provider } from "react-redux";
+
 import { Colors } from "@/constants/Colors";
+import { store } from "@/store";
 
 SplashScreen.preventAutoHideAsync();
 

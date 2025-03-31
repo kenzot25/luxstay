@@ -100,7 +100,7 @@ export default function HomeScreen() {
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.featuredList}
             >
-              {featuredRooms.map((room) => (
+              {featuredRooms?.map((room) => (
                 <View key={room.id} style={styles.featuredItem}>
                   <RoomCard
                     room={room}
@@ -115,7 +115,7 @@ export default function HomeScreen() {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>All Rooms</Text>
             <View style={styles.roomsList}>
-              {rooms.map((room) => (
+              {rooms?.map((room) => (
                 <RoomCard
                   key={room.id}
                   room={room}

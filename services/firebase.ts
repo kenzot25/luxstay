@@ -1,57 +1,52 @@
 import { initializeApp } from "firebase/app";
 import {
-  getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
   User as FirebaseUser,
-  updateProfile,
-  initializeAuth,
-  browserLocalPersistence,
+  createUserWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import {
-  getFirestore,
   collection,
+  Timestamp,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
+  getFirestore,
+  orderBy,
+  query,
   setDoc,
   updateDoc,
-  deleteDoc,
-  query,
   where,
-  Timestamp,
-  orderBy,
 } from "firebase/firestore";
 import { store } from "@/store";
-import { setUser, setLoading, setError } from "@/store/slices/authSlice";
+import { setError, setLoading, setUser } from "@/store/slices/authSlice";
 import { AppUser } from "@/store/types";
 import {
-  Room,
   Booking,
+  CreateBookingRequest,
+  Room,
+  RoomFilters,
+  UpdateProfileRequest,
   UserProfile,
   WishlistItem,
-  RoomFilters,
-  CreateBookingRequest,
-  UpdateProfileRequest,
 } from "@/types/api";
 
 // Your Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
+  apiKey: "AIzaSyDa1z5zMb5aDcET_qpUGuV4TF_m63bBZNs",
+  authDomain: "booking-app-ecf71.firebaseapp.com",
+  projectId: "booking-app-ecf71",
+  storageBucket: "booking-app-ecf71.firebasestorage.app",
+  messagingSenderId: "375722571239",
+  appId: "1:375722571239:android:5ec523c314f58e46f27942",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = initializeAuth(app, {
-  persistence: browserLocalPersistence,
-});
+const auth = getAuth(app);
 const db = getFirestore(app);
 
 // Collection references
@@ -152,7 +147,7 @@ export const firebaseService = {
       if (filters.price_lte)
         constraints.push(where("price", "<=", filters.price_lte));
       if (filters.location_contains)
-        constraints.push(where("location", ">=", filters.location_contains));
+        constraints.push(where("location", "==", filters.location_contains));
       if (filters.type) constraints.push(where("type", "==", filters.type));
       if (filters.rating_gte)
         constraints.push(where("rating", ">=", filters.rating_gte));
@@ -166,10 +161,16 @@ export const firebaseService = {
         : query(roomsCollection);
 
     const snapshot = await getDocs(q);
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...(doc.data() as Room),
-    }));
+
+    return snapshot.docs.map((doc) => {
+      const data = doc.data() as Room;
+      return {
+        id: doc.id,
+        ...data,
+        createdAt: "",
+        updatedAt: "",
+      };
+    });
   },
 
   getRoomById: async (id: string) => {

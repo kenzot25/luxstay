@@ -114,7 +114,6 @@ const RoomCard: React.FC<RoomCardProps> = ({
           <View style={styles.ratingContainer}>
             <FontAwesome name="star" size={14} color={Colors.warning} />
             <Text style={styles.rating}>{room.rating}</Text>
-            <Text style={styles.reviews}>({room.reviews})</Text>
           </View>
           <Text style={styles.price}>
             ${room.price}

@@ -99,7 +99,7 @@ const RoomScreen = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image source={selectedRoom.images[0]} style={styles.image} />
+        <Image src={selectedRoom.images[0] || ""} style={styles.image} />
         <TouchableOpacity
           style={styles.wishlistButton}
           onPress={handleWishlist}
@@ -124,11 +124,11 @@ const RoomScreen = () => {
           <View style={styles.ratingContainer}>
             <FontAwesome name="star" size={16} color={Colors.warning} />
             <Text style={styles.rating}>{selectedRoom.rating}</Text>
-            <Text style={styles.reviews}>({selectedRoom.reviews} reviews)</Text>
+            {/* <Text style={styles.reviews}>({selectedRoom.reviews} reviews)</Text> */}
           </View>
         </View>
 
-        <View style={styles.details}>
+        {/* <View style={styles.details}>
           <View style={styles.detail}>
             <FontAwesome name="bed" size={20} color={Colors.primary} />
             <Text style={styles.detailText}>
@@ -147,7 +147,7 @@ const RoomScreen = () => {
               Up to {selectedRoom.maxGuests} Guests
             </Text>
           </View>
-        </View>
+        </View> */}
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Description</Text>

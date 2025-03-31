@@ -11,6 +11,7 @@ export interface Room {
   type: "single" | "double" | "suite" | "presidential";
   createdAt: string;
   updatedAt: string;
+  maxGuests: number;
 }
 
 // Booking types

@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Room, RoomFilters } from '@/store/types';
-import { RootState } from '@/store';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Room, RoomFilters } from "@/store/types";
+import { RootState } from "@/store";
 
 interface RoomsState {
   rooms: Room[];
@@ -21,7 +21,7 @@ const initialState: RoomsState = {
 };
 
 const roomsSlice = createSlice({
-  name: 'rooms',
+  name: "rooms",
   initialState,
   reducers: {
     setRooms: (state, action: PayloadAction<Room[]>) => {
@@ -39,9 +39,9 @@ const roomsSlice = createSlice({
     },
     setFilters: (state, action: PayloadAction<RoomFilters>) => {
       state.filters = { ...state.filters, ...action.payload };
-      
+
       // Apply filters
-      state.filteredRooms = state.rooms.filter(room => {
+      state.filteredRooms = state.rooms.filter((room) => {
         const filters = state.filters;
         let matches = true;
 
@@ -55,9 +55,11 @@ const roomsSlice = createSlice({
         }
 
         if (filters.amenities?.length) {
-          matches = matches && filters.amenities.every(amenity =>
-            room.amenities.includes(amenity)
-          );
+          matches =
+            matches &&
+            filters.amenities.every((amenity) =>
+              room.amenities.includes(amenity)
+            );
         }
 
         if (filters.rating) {
@@ -69,8 +71,11 @@ const roomsSlice = createSlice({
         }
 
         if (filters.location) {
-          matches = matches && room.location.toLowerCase()
-            .includes(filters.location.toLowerCase());
+          matches =
+            matches &&
+            room.location
+              .toLowerCase()
+              .includes(filters.location.toLowerCase());
         }
 
         // Date filtering would go here when implemented
@@ -100,8 +105,10 @@ export const {
 
 // Selectors
 export const selectRooms = (state: RootState) => state.rooms.rooms;
-export const selectFilteredRooms = (state: RootState) => state.rooms.filteredRooms;
-export const selectSelectedRoom = (state: RootState) => state.rooms.selectedRoom;
+export const selectFilteredRooms = (state: RootState) =>
+  state.rooms.filteredRooms;
+export const selectSelectedRoom = (state: RootState) =>
+  state.rooms.selectedRoom;
 export const selectRoomsLoading = (state: RootState) => state.rooms.loading;
 export const selectRoomsError = (state: RootState) => state.rooms.error;
 export const selectRoomsFilters = (state: RootState) => state.rooms.filters;

@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -7,11 +8,13 @@ import {
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+
 import EmptyState from "@/components/EmptyState";
 import FilterModal from "@/components/FilterModal";
 import RoomCard from "@/components/RoomCard";
 import SearchBar from "@/components/SearchBar";
 import { Colors } from "@/constants/Colors";
+import { firebaseService } from "@/services/firebase";
 import {
   selectFilteredRooms,
   selectRoomsLoading,
@@ -21,9 +24,6 @@ import {
 } from "@/store/slices/roomsSlice";
 import { Room, RoomFilters } from "@/store/types";
 import { mapApiRoomsToRooms } from "@/utils/mappers";
-
-import _ from "lodash";
-import { firebaseService } from "@/services/firebase";
 
 export default function SearchScreen() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -120,7 +120,7 @@ export default function SearchScreen() {
         renderLoading()
       ) : (
         <FlatList
-          data={filteredRooms}
+          data={filteredRooms || []}
           renderItem={renderRoom}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.roomsList}
